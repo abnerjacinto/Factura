@@ -1,0 +1,73 @@
+﻿@model List<Factura.Core.Entities.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Producto</h2>
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-success" })
+</p>
+<div class="form-horizontal">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title">Listado Clientes</h3></div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayName("CODIGO")
+                    </th>
+                    <th>
+                        @Html.DisplayName("NOMBRE")
+                    </th>
+                    <th>
+                        @Html.DisplayName("DESCRIPCION")
+                    </th>
+                    <th>
+                        @Html.DisplayName("UNIDAD")
+                    </th>
+                    <th>
+                        @Html.DisplayName("PRECIO")
+                    </th>
+                    <th>
+                        @Html.DisplayName("EXISTENCIA")
+                    </th>
+                    
+                    <th>
+
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Stock)
+                        </td>
+                        
+                        <td>
+                            @Html.ActionLink("Actualizar", "Actualizar", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+                            @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,148 @@
+﻿@model Factura.Web.Models.InvoiceView
+@{
+    /**/
+
+    ViewBag.Title = "NuevaFactura";
+}
+@Html.Raw(TempData["msg"])
+<h2>NuevaFactura</h2>
+<p>
+    @Html.ActionLink("Agregar Cliente", "BuscarCliente", null, new { @class = "btn btn-default" })
+</p>
+@using (Html.BeginForm("NuevaFactura", "Factura", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title">Nueva Factura</h3></div>
+        <div class="panel-body">
+            <div class="form-inline">
+                <div class="form-group">
+                    @Html.Label("Cliente", htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Customer.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer.FullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("NIT", htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Customer.NIT, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer.NIT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Fecha Fac", htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Invoice.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Invoice.InvoiceDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Direccion", htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Customer.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Customer.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <br />
+            <br />
+            <div>
+                <div class="form-group">
+                    <div class=" col-md-12">
+                        @Html.ActionLink("Agregar Producto", "BuscarProducto", null, new { @class = "btn btn-success" })
+                        <input type="submit" value="Guardar Factura" class="btn btn-primary" />
+                    </div>
+                </div>
+                <h4>Productos</h4>
+                <br />
+                <table class="table table-hover">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Nombre")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Descripcion")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Unidad")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Precio")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Cantidad")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Parcial")
+                        </th>
+
+                        <th></th>
+                    </tr>
+
+                    @for (int i = 0; i < Model.ProductList.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.ProductList[i].Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.ProductList[i].Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.ProductList[i].Unit)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.ProductList[i].Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.ProductList[i].Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.ProductList[i].Partial)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Actualizar", "Actualizar", new { id = Model.ProductList[i].Id }) |
+                                @Html.ActionLink("Eliminar", "Eliminar", new { id = Model.ProductList[i].Id })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                <div class="form-inline">
+
+                    <div class="form-group">
+                        @Html.Label("Iva", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Invoice.Tax, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Invoice.Tax, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Total", htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Invoice.Total, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Invoice.Total, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+

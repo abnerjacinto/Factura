@@ -1,0 +1,77 @@
+﻿@model List<Factura.Core.Entities.Customer>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Clientes</h2>
+<p>
+    @Html.ActionLink("Crear Nuevo", "Nuevo", null, new { @class = "btn btn-success" })
+</p>
+<div class="form-horizontal">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title">Listado Clientes</h3></div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayName("CODIGO")
+                    </th>
+                    <th>
+                        @Html.DisplayName("NOMBRE(S)")
+                    </th>
+                    <th>
+                        @Html.DisplayName("APELLIDO(S)")
+                    </th>
+                    <th>
+                        @Html.DisplayName("NIT")
+                    </th>
+                    <th>
+                        @Html.DisplayName("DIRECCION")
+                    </th>
+                    <th>
+                        @Html.DisplayName("TELEFONO")
+                    </th>
+                    <th>
+                        @Html.DisplayName("CORREO")
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NIT)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Actualizar", "Actualizar", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+                            @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
