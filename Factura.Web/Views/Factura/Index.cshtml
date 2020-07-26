@@ -56,12 +56,22 @@
                             @Html.DisplayFor(modelItem => item.Total)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Status)
+                            @Html.DisplayFor(modelItem => item.Active)
                         </td>
                         
                         <td>
-                            @Html.ActionLink("Detalle", "Detalle", new { id = item.Id }, new { @class = "btn btn-primary" }) |
-                            @Html.ActionLink("Anular", "Anular", new { id = item.Id }, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Detalle", "DetalleFactura", new { id = item.Id }, new { @class = "btn btn-primary" })|
+                            @if (item.Status > 0)
+                            {
+                                @Html.ActionLink("Anular", "AnularFactura", new { id = item.Id }, new { @class = "btn btn-danger disabled" })
+
+                            }
+                            @if (item.Status <= 0)
+                            {
+                                @Html.ActionLink("Anular", "AnularFactura", new { id = item.Id }, new { @class = "btn btn-danger" })
+
+                            }
+
                         </td>
                     </tr>
                 }

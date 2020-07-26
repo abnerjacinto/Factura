@@ -9,7 +9,7 @@ namespace Factura.Infrastructure.Data
         private MySqlConnection conn;
         private Connection()
         {
-            conn = new MySqlConnection("server=localhost;port=3306;user=root;password=;database=invoices;Convert Zero Datetime=True;connect timeout=1500");
+            conn = new MySqlConnection("server=localhost;port=3306;user=root;password=;database=invoices;Convert Zero Datetime=True;Allow Zero Datetime=True;connect timeout=1500");
             connection = this;
         }
         public static Connection IsConnected()

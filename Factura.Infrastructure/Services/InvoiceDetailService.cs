@@ -39,6 +39,11 @@ namespace Factura.Infrastructure.Services
             return _repository.GetAll();
         }
 
+        public List<InvoiceDetail> GetAllByInvoiceId(int id)
+        {
+            return _repository.GetAllByInvoiceId(id);
+        }
+
         public int GetLastId()
         {
             return _repository.GetLastId();

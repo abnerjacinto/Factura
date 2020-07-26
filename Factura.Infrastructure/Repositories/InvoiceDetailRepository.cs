@@ -189,6 +189,43 @@ namespace Factura.Infrastructure.Repositories
                 _Conn.CloseConnection();
             }
         }
+        public List<InvoiceDetail> GetAllByInvoiceId(int id)
+        {
+            List<InvoiceDetail> InvoiceDetails = new List<InvoiceDetail>();
+            string All = "SELECT Id, InvoiceId, ProductId, Price, Qty FROM InvoiceDetail WHERE id='" + id + "'";
+            try
+            {
+
+                _Command = new MySqlCommand(All, _Conn.GetConn());
+                _Conn.GetConn().Open();
+                MySqlDataReader read = _Command.ExecuteReader();
+
+                while (read.Read())
+                {
+                    InvoiceDetail _invoiceDetail = new InvoiceDetail
+                    {
+                        Id = Convert.ToInt32(read[0].ToString()),
+                        InvoiceId = Convert.ToInt32(read[1].ToString()),
+                        ProductId = Convert.ToInt32(read[2].ToString()),
+                        Price = Convert.ToDouble(read[3].ToString()),
+                        Qty = Convert.ToDouble(read[4].ToString()),
+
+                    };
+                    InvoiceDetails.Add(_invoiceDetail);
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _Conn.GetConn().Close();
+                _Conn.CloseConnection();
+            }
+            return InvoiceDetails;
+        }
         #endregion
 
     }

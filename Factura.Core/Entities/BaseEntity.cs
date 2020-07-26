@@ -9,9 +9,9 @@ namespace Factura.Core.Entities
         public int Id { get; set; }
         public int Status { get; set; }
         public double CreatedTime { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
         public double ModifiedTime { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public string ModifiedDate { get; set; }
         public int CreatedUserId { get; set; }
         public int ModifiedUserId { get; set; }
     }

@@ -23,8 +23,8 @@ namespace Factura.Infrastructure.Repositories
         #region Methods
         public void Create(Invoice entity)
         {
-            string Create = "INSERT INTO Invoice(CreatedTime,  CreatedUserId,  CustomerId, Serie, InvoiceNumber, Tax, Total) " +
-                  "VALUES (" + entity.CreatedTime + "," + entity.CreatedUserId + "," + entity.CustmerId + ",'" + entity.Serie + "','" + entity.InvoiceNumber + "'," + entity.Tax + "," + entity.Total + ")";
+            string Create = "INSERT INTO Invoice(CreatedTime,  CreatedUserId,  CustomerId, Serie, InvoiceDate, InvoiceNumber, Tax, Total) " +
+                  "VALUES (" + entity.CreatedTime + "," + entity.CreatedUserId + "," + entity.CustmerId + ",'" + entity.Serie + "','" + entity.InvoiceDate + "','" + entity.InvoiceNumber + "'," + entity.Tax + "," + entity.Total + ")";
             try
             {
                 _Command = new MySqlCommand(Create, _Conn.GetConn());
@@ -73,7 +73,7 @@ namespace Factura.Infrastructure.Repositories
         public Invoice FindbyId(int id)
         {
             Invoice _invoice = new Invoice();
-            string Find = "SELECT Id,InvoiceDate, CustomerId, Serie, InvoiceNumber, Tax, Total WHERE Id='" + id + "'";
+            string Find = "SELECT Id,InvoiceDate, CustomerId, Serie, InvoiceNumber, Tax, Total, Status FROM Invoice WHERE Id='" + id + "'";
             try
             {
 
@@ -84,12 +84,13 @@ namespace Factura.Infrastructure.Repositories
                 if (read.Read())
                 {
                     _invoice.Id = Convert.ToInt32(read[0].ToString());
-                    _invoice.InvoiceDate = Convert.ToDateTime(read[1].ToString());
+                    _invoice.InvoiceDate = read[1].ToString();
                     _invoice.CustmerId = Convert.ToInt32(read[2].ToString());
                     _invoice.Serie = read[3].ToString();
                     _invoice.InvoiceNumber = read[4].ToString();
                     _invoice.Tax = Convert.ToDouble(read[5].ToString());
                     _invoice.Total = Convert.ToDouble(read[6].ToString());
+                    _invoice.Status = Convert.ToInt32(read[7].ToString());
                 }
             }
             catch (Exception)
@@ -108,7 +109,7 @@ namespace Factura.Infrastructure.Repositories
         public List<Invoice> GetAll()
         {
             List<Invoice> invoices = new List<Invoice>();
-            string All = "SELECT Id,InvoiceDate, CustomerId, Serie, InvoiceNumber, Tax, Total FROM Invoice";
+            string All = "SELECT Id,InvoiceDate, CustomerId, Serie, InvoiceNumber, Tax, Total,Status FROM Invoice";
             try
             {
 
@@ -121,14 +122,15 @@ namespace Factura.Infrastructure.Repositories
                     Invoice _invoice = new Invoice
                     {
                         Id = Convert.ToInt32(read[0].ToString()),
-                        InvoiceDate = Convert.ToDateTime(read[1].ToString()),
+                        InvoiceDate = read[1].ToString(),
                         CustmerId = Convert.ToInt32(read[2].ToString()),
                         Serie = read[3].ToString(),
                         InvoiceNumber = read[4].ToString(),
                         Tax = Convert.ToDouble(read[5].ToString()),
                         Total = Convert.ToDouble(read[6].ToString()),
+                        Status = Convert.ToInt32(read[7].ToString())
 
-                };
+                    };
                     invoices.Add(_invoice);
                 };
             }
@@ -156,7 +158,9 @@ namespace Factura.Infrastructure.Repositories
                 _Command = new MySqlCommand(LastId, _Conn.GetConn());
                 _Conn.GetConn().Open();
                 MySqlDataReader read = _Command.ExecuteReader();
-                Id = Convert.ToInt32(read[0].ToString());
+                if (read.Read()) {
+                    Id = Convert.ToInt32(read["MAX(Id)"].ToString());
+                }                    
 
             }
             catch (Exception)
@@ -174,7 +178,7 @@ namespace Factura.Infrastructure.Repositories
 
         public void Update(Invoice entity)
         {
-            string Update = "UPDATE Invoice SET InvoiceDate='" + entity.InvoiceDate + "', CustomerId=" + entity.CustmerId + ", Serie='" + entity.Serie + "', InvoiceNumber='" + entity.InvoiceNumber + "', Tax=" + entity.Tax + ", Total=" + entity.Total + ", ModifiedTime=" + entity.ModifiedTime + ", ModifiedUserId=" + entity.ModifiedUserId + " WHERE id='" + entity.Id + "' ";
+            string Update = "UPDATE Invoice SET Status=" + entity.Status + ", InvoiceDate='" + entity.InvoiceDate + "', CustomerId=" + entity.CustmerId + ", Serie='" + entity.Serie + "', InvoiceNumber='" + entity.InvoiceNumber + "', Tax=" + entity.Tax + ", Total=" + entity.Total + ", ModifiedTime=" + entity.ModifiedTime + ", ModifiedUserId=" + entity.ModifiedUserId + " WHERE id='" + entity.Id + "' ";
             try
             {
                 _Command = new MySqlCommand(Update, _Conn.GetConn());

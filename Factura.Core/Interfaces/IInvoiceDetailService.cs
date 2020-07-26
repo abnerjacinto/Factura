@@ -13,5 +13,6 @@ namespace Factura.Core.Interfaces
         InvoiceDetail FindbyId(int id);
         List<InvoiceDetail> GetAll();
         int GetLastId();
+        List<InvoiceDetail> GetAllByInvoiceId(int id);
     }
 }
