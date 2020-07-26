@@ -1,5 +1,6 @@
 ﻿using Factura.Core.Entities;
 using Factura.Infrastructure.Services;
+using Factura.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Factura.Web.Controllers
                     return View(); ;
                 }
             }
-
+            SessionHelper.AddUserToSession(user.Id.ToString());
             return RedirectToAction("Index", "Inicio");
         }
     }

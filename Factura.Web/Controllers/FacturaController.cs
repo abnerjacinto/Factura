@@ -1,5 +1,6 @@
 ﻿using Factura.Core.Entities;
 using Factura.Infrastructure.Services;
+using Factura.Web.Filters;
 using Factura.Web.Helpers;
 using Factura.Web.Models;
 using System;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Factura.Web.Controllers
 {
+    [Autenticado]
     public class FacturaController : Controller
     {
         // GET: Factura

@@ -1,5 +1,6 @@
 ﻿using Factura.Core.Entities;
 using Factura.Infrastructure.Services;
+using Factura.Web.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Factura.Web.Controllers
 {
+    [Autenticado]
     public class ClienteController : Controller
     {
         private CustomerService _customerService;
